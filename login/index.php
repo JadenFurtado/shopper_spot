@@ -1,10 +1,14 @@
-<?php include('login.php'); ?>
+<?php 
+//include('login.php'); 
+include($_SERVER['DOCUMENT_ROOT'].'/vfl/login/login.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Products - Shopper's Spot</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://localhost/vfl/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,11 +22,11 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="https://localhost/index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
+                        <li><a href="https://localhost/vfl/index.php">Home</a></li>
+                        <li><a href="https://localhost/vfl/products/">Products</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Contact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="https://localhost/vfl/profile/">Account</a></li>
                     </ul>
                 </nav>
                 <a href="cart.html"><img src="https://localhost/vfl/images/shopping-cart.png" width="30px" height="30px"></a>
@@ -48,34 +52,56 @@
                             <form id="LoginForm" method="POST">
                                 <input type="text" placeholder="email" name="email">
                                 <input type="password" placeholder="Password" name="password">
+                                <select name="user_type">
+                                    <option value="user">user</option>
+                                    <option value="shop">shop</option>
+                                </select>
                                 <button type="submit" name="submit" class="btn">Login</button>
                                 <a href="#">Forgot Password</a>
                             </form>
 
-                            <form id="RegForm">
-                                <input type="text" placeholder="Username">
-                                <input type="email" placeholder="Email">
-                                <input type="password" placeholder="Password">
-                                <button type="submit" class="btn">Register</button>
+                            <form method="POST" id="RegForm">
+                                <input type="text" placeholder="Username" name="username">
+                                <input type="email" placeholder="Email" name="emails">
+                                <input type="password" placeholder="Password" name="passwords">
+                                <button type="submit" class="btn" name="register">Register</button>
+                                <button class="btn shop">for shops</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".shop").click(function(){
+                    location.href="https://localhost/vfl/signup/";
+                });
+            });
+        </script>
         <?php
     //just temporary
     if(isset($_POST['submit'])){
         
         $email=$_POST['email'];
         $password=$_POST['password'];
+        $user_type=$_POST['user_type'];
         $login= new Login();
-        if($login->user_Login($email,$password)){
+        if($login->user_Login($email,$password,$user_type)){
             echo "<script>alert('you are logged in');</script>";
             header("location:https://localhost/vfl/");
         }
         else{
             echo "<script>alert('there was an error!');</script>";
+        }
+    }
+    if(isset($_POST['register'])){
+        $email=$_POST['emails'];
+        $password=$_POST['passwords'];
+        $username=$_POST['username'];
+        $signup=new Login();
+        if($signup->user_signup($email,$password,$username)){
+            //echo "<script>alert('success');location.replace('https://localhost/vfl/login/');</script>";
         }
     }
 ?>

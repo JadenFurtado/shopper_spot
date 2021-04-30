@@ -1,4 +1,6 @@
-<?php include($_SERVER['DOCUMENT_ROOT'].'/vfl/products/add_product.php'); ?>
+<?php 
+include($_SERVER['DOCUMENT_ROOT'].'/vfl/products/add_product.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- required for the cart -->
+    <script type="text/javascript"></script>
 </head>
 <body>
          <div class="container">
@@ -19,14 +23,14 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
+                        <li><a href="https://localhost/vfl/">Home</a></li>
+                        <li><a href="https://localhost/vfl/products/">Products</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Contact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="https://localhost/vfl/profile/?id=<?php echo $_SESSION['user_id'] ?>&user=<?php echo $_SESSION['user_type'] ?>">Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="https://localhost/vfl/images/shopping-cart.png" width="30px" height="30px"></a>
+                <a href="https://localhost/vfl/cart/"><img src="https://localhost/vfl/images/shopping-cart.png" width="30px" height="30px"></a>
                 <img src="https://localhost/vfl/images/menu_icon.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>   
@@ -99,19 +103,37 @@
         }
                  ?>
              </div>
+             <div>
+                <h4>Write a review here</h4>
+                 <textarea class="review" name="review" cols="50" rows="4" placeholder="your review"></textarea>
+                 <a href="#" class="submit btn">submit</a>
+             </div>
          </div>
      </div>
      <script>
      $(".add_to_cart").click(function(){
         var prod_id="<?php echo htmlspecialchars($_GET['prod_id']); ?>";
         var product_quant=$("#quant").val();
-        $ajax({
-            url:"add_to_cart",
+        $.ajax({
+            url:"add_to_cart.php",
             data:({prod_id:prod_id,product_quant:product_quant}),
             type:"post",
             dataType:"text",
             success:function(data){
                 alert('success');
+            }
+        });
+     });
+     $(".submit").click(function(){
+        var prod_id="<?php echo htmlspecialchars($_GET['prod_id']); ?>";
+        var prod_review=htmlspecialchars($(".review").val());
+        $.ajax({
+            url:"add_product_review",
+            data:({prod_id:prod_id,prod_review:prod_review}),
+            type:"post",
+            dataType:"text",
+            success:function(data){
+                alert("added review");
             }
         });
      });

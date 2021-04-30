@@ -35,3 +35,24 @@ CREATE TABLE users(
     signup_date DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 -- email should be unque
+
+DELETE FROM posts WHERE url='1cb4196c78';
+
+CREATE TABLE review(
+    user_id INT(100),
+    product_id INT(100),
+    review VARCHAR(255),
+    CONSTRAINT users_review FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT product_review FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE notifications(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(100),
+    shop_id INT(100),
+    notification_type VARCHAR(10),
+    notification_link VARCHAR(255),
+    CONSTRAINT user_ntf FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT shop_ntf FOREIGN KEY (shop_id) REFERENCES shop(id) 
+);
+ALTER TABLE notifications ADD seen_unseen VARCHAR(10);

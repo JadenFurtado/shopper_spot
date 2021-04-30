@@ -18,7 +18,7 @@
          <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="https://localhost/vfl/images/logo.png" width="150px" alt="logo"></a>
+                    <a href="https://localhost/vfl/index.php"><img src="https://localhost/vfl/images/logo.png" width="150px" alt="logo"></a>
                 </div>
                 <nav>
                     <ul id="MenuItems">
@@ -26,10 +26,16 @@
                         <li><a href="https://localhost/vfl/products/index.php">Products</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Contact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <?php 
+                        if(isset($_SESSION['user_id'])){
+                          ?>
+                        <li><a href="https://localhost/vfl/profile/?id=<?php echo $_SESSION['user_id'] ?>&user=<?php echo $_SESSION['user_type'] ?>">Profile</a></li>
+                          <?php
+                        }
+                        ?>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="https://localhost/vfl/images/shopping-cart.png" width="30px" height="30px"></a>
+                <a href="https://localhost/vfl/cart/"><img src="https://localhost/vfl/images/shopping-cart.png" width="30px" height="30px"></a>
                 <img src="https://localhost/vfl/images/menu_icon.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>   
@@ -54,7 +60,7 @@
             while($row=mysqli_fetch_array($data)){
               $i++;
                 ?>
-                <div class="col-4 <?php echo $row['id'] ?>" id="prod_<?php echo $row['id'] ?>">
+              <div class="col-4 <?php echo $row['id'] ?>" id="prod_<?php echo $row['id'] ?>">
                  <img src="https://localhost/vfl/images/personal-care-product1.png" alt="">
                  <h4><?php echo htmlspecialchars($row['product_name']); ?></h4>
                  <div class="rating">
@@ -79,6 +85,8 @@
             } 
         }
         ?>
+             </div>
+             <div class="row">
              <div class="col-4">
                  <img src="https://localhost/vfl/images/personal-care-product1.png" alt="">
                  <h4>650ml Shampoo</h4>
@@ -256,35 +264,6 @@
         }
     </script>
 <!--this is just a demo-->
-
-<div style="padding: 20px;">
-<?php
-if(isset($_SESSION['user_id'])){//checks if user is logged in
-    echo '<a href="https://localhost/vfl/products/Products.php">Add products</a>';
-    ?>
-    <br>
-    <div class="products">
-        <?php 
-        $products = new Products();
-        $data=$products->get_products();
-        if($data!=NULL){
-            while($row=mysqli_fetch_array($data)){
-                echo htmlspecialchars($row['shop_id']);
-                echo "<br>";
-                echo htmlspecialchars($row['product_price']);
-                echo "<br>";
-                echo htmlspecialchars($row['prod_subcat']);
-                echo "<br><br>";
-            } 
-        }
-    }
-    else{
-        header("https://localhost/vfl/404.php");
-    }
-        ?>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>

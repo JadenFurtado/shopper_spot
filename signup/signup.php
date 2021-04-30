@@ -28,6 +28,31 @@ class Signup extends Database{
 
     }
 
+    public function user_signup($email,$password,$username){
+        
+        $link=$this->connect();
+        
+        $email=mysqli_real_escape_string($link,$this->test_input($email));
+        $password=mysqli_real_escape_string($link,$this->test_input($password));
+        $username=mysqli_real_escape_string($link,$this->test_input($username));
+        $password = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
+        $url=$this->getName(rand(10,50));
+
+        $sql="SELECT email FROM users WHERE email='$email'";
+        if(mysqli_query($link,$sql)){
+           return false; 
+        }
+        else{
+            $sql="INSERT INTO users(email,user_name,passwords)VALUES('$email','$username','$password')";
+            if(mysqli_query($link,$sql)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }    
+
     //function to get a random string
     public function getName($n) { 
         

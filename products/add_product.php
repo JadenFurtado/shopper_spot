@@ -4,7 +4,7 @@
 include($_SERVER['DOCUMENT_ROOT'].'/vfl/login/login.php');
 
 class Products extends Database{
-    use Sanitize;
+    
     public function add_product($prod_name,$prod_description,$prod_price,$prod_quantity,$prod_category,$prod_subcat){
         
         $prod_name=$this->test_input($prod_name);
@@ -83,6 +83,19 @@ class Products extends Database{
         }
     }
 
+    public function add_product_review($product_id,$review){
+        
+        $link=$this->connect();
+        $product_id=mysqli_real_escape_string($link,$product_id);
+        $review=mysqli_real_escape_string($link,$review);
+
+        $sql="INSERT INTO review(user_id,product_id,review) VALUES('".$_SESSION['user_id']."','$product_id','$review')";
+        if(mysqli_query($link,$sql)){
+            echo "<script>alert('review added');</script>";
+        }
+        
+    }
+
     public function get_product_details($prod_id){
         $link=$this->connect();
         $prod_id=mysqli_real_escape_string($link,$this->test_input($prod_id));
@@ -94,6 +107,13 @@ class Products extends Database{
         else{
             return NULL;
         }
+    }
+    public function test_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    
     }
 }
 

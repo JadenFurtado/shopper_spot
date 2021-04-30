@@ -1,9 +1,7 @@
 <?php
-//session_start();
-include($_SERVER['DOCUMENT_ROOT'].'/vfl/products/add_product.php');
-foreach ($_SESSION['cart'] as $key){
+session_start();
+include('notifications.php');
 
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,17 +37,22 @@ foreach ($_SESSION['cart'] as $key){
      <div class="small-container cart-page">
          <table>
              <tr>
-                 <th>Product</th>
-                 <th>Quantity</th>
-                 <th>Subtotal</th>
+                <span>
+                 <th>Your Notifications</th>
+                 <th></th>
+                 <th></th>
+                </span>
              </tr>
-             <!-- the carts products -->
-<?php       foreach ($_SESSION['cart'] as $key){
-	?>
+             <?php 
+                $notification = new Notifications();
+                $ntf = $notification->get_notifications();
+                if($ntf!=NULL){
+                while($row=mysqli_fetch_array($ntf)){
+                ?>
              <tr>
                  <td>
                      <div class="cart-info">
-                        <img src="https://localhost/vfl/images/red-shoes.png">
+                       
                         <div>
                             <p>Red Running Shoes</p>
                             <small>Price: Rs.800.00</small>
@@ -61,52 +64,23 @@ foreach ($_SESSION['cart'] as $key){
                  <td><input type="number" value="1"></td>
                  <td>Rs.800.00</td>
              </tr>
-         <?php }//for loop ends here ?>
-             <!--cart stops here -->
-
-             <tr>
+             <?php
+            }
+        }
+        else{
+            ?>
+            <tr>
                  <td>
                      <div class="cart-info">
-                        <img src="https://localhost/vfl/images/red-shoes.png">
-                        <div>
-                            <p>Red Running Shoes</p>
-                            <small>Price: Rs.800.00</small>
-                            <br>
-                            <a href="#">Remove</a>
-                        </div>
+                       No notification to display
                      </div>
                  </td>
-                 <td><input type="number" value="1"></td>
-                 <td>Rs.800.00</td>
+                 <td></td>
+                 <td></td>
              </tr>
-             <tr>
-                <td>
-                    <div class="cart-info">
-                       <img src="https://localhost/vfl/images/red-shirt.png">
-                       <div>
-                           <p>Red Running ShoesRed Casual shirt for Men</p>
-                           <small>Price: Rs.650.00</small>
-                           <br>
-                           <a href="#">Remove</a>
-                       </div>
-                    </div>
-                </td>
-                <td><input type="number" value="1"></td>
-                <td>Rs.650.00</td>
-            </tr>
-         </table>
-         <div class="total-price">
-             <table>
-                 <tr>
-                     <td>Total</td>
-                     <td>Rs.1450.00</td>
-                 </tr>
-                 <tr>
-                 	<td></td>
-                 	<td><a class="btn" href="https://localhost/vfl/checkout/">check out</a></td>
-                 </tr>
-             </table>
-         </div>
+            <?php
+        }
+             ?>
      </div>
     <!-------js for toggle menu------>  
     <script>

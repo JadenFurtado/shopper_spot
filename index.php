@@ -15,26 +15,26 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" width="150px" alt="logo"></a>
+                    <a href="https://localhost/vfl/cart/"><img src="images/logo.png" width="150px" alt="logo"></a>
                 </div>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="https://localhost/vfl/index.php">Home</a></li>
                         <li><a href="https://localhost/vfl/products/index.php">Products</a></li>
-                        <li><a href="#">About</a></li>
+                        <li><a href="https://localhost/vfl/about.php">About</a></li>
                         <li><a href="#">Contact</a></li>
                         <?php
-                        if(isset($_SESSION['user_id'])){
-                            ?>
-                        <li><a href="https://localhost/vfl/profile/shop/">Account</a></li>
-                        <?php
-                        }
-                        else{
+                    if(isset($_SESSION['user_id'])){//for shops
+                      ?>
+                        <li><a href="https://localhost/vfl/profile/?id=<?php echo $_SESSION['user_id'] ?>&user=<?php echo $_SESSION['user_type']?>">Account</a></li>
+                      <?php
+                    }
+                    else{
                         ?>
                          <li><a href="https://localhost/vfl/login/">login</a></li>
                          <li><a href="https://localhost/vfl/signup/">signup</a></li>
                         <?php
-                        }
+                    }
                         ?>
                     </ul>
                 </nav>
