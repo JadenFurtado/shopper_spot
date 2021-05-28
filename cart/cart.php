@@ -9,7 +9,8 @@ class Cart{
 			$_SESSION['cart']=array();
 		}
 		$a=array(array('product_id' => $product_id,'product_quantity'=>$product_quantity));
-		$_SESSION['cart'][$product_id]=array('quantity' =>$product_quantity,'id'=$product_id);
+		$data=$product_quantity."_".$product_id;
+		$_SESSION['cart'][$product_id]=$data;
 		return true;
 	}
 

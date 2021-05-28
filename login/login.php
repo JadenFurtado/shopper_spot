@@ -56,7 +56,7 @@ class Login extends Database{
                 return true;
             }
             else{
-                echo $link->error;
+                echo "<script>alert(".$link->error.");</script>";
             }
         }
     }    

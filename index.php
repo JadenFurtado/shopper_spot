@@ -29,11 +29,16 @@
                         <li><a href="https://localhost/vfl/profile/?id=<?php echo $_SESSION['user_id'] ?>&user=<?php echo $_SESSION['user_type']?>">Account</a></li>
                       <?php
                     }
-                    else{
+                    else if(!(isset($_SESSION['user_id'])||isset($_COOKIE['user']))){
                         ?>
                          <li><a href="https://localhost/vfl/login/">login</a></li>
                          <li><a href="https://localhost/vfl/signup/">signup</a></li>
                         <?php
+                    }
+                    if(isset($_COOKIE['user'])){
+                      ?>
+                      <li><a href="https://localhost/vfl/user/">My profile</a></li>
+                      <?php
                     }
                         ?>
                     </ul>
@@ -44,7 +49,7 @@
             <div class="row">
                 <div class="col-2">
                     <h1>Welcome to <br> Shopper's Spot!</h1>
-                    <a href="#" class="btn">Shop Now &#10132;</a>
+                    <a href="https://localhost/vfl/products/" class="btn">Shop Now &#10132;</a>
                 </div>
                 <div class="col-2">
                     <img src="images/basket.png" alt="basket">
@@ -249,7 +254,8 @@
             </div>
         </div>
     </div>
-    <!-------js for toggle menu------>  
+    
+        <!-------js for toggle menu------>  
     <script>
         var MenuItems = document.getElementById("MenuItems");
         MenuItems.style.maxHeight = "0px";

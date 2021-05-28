@@ -56,3 +56,11 @@ CREATE TABLE notifications(
     CONSTRAINT shop_ntf FOREIGN KEY (shop_id) REFERENCES shop(id) 
 );
 ALTER TABLE notifications ADD seen_unseen VARCHAR(10);
+
+CREATE TABLE order(
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100),
+    shop_id INT(100),
+    CONSTRAINT shop_order FOREIGN KEY (shop_id) REFERENCES shop(id),
+    CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES users(id) 
+);

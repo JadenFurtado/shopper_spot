@@ -1,9 +1,7 @@
 <?php
 //session_start();
 include($_SERVER['DOCUMENT_ROOT'].'/vfl/products/add_product.php');
-foreach ($_SESSION['cart'] as $key){
-
-}
+$cart=new Products();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,9 +22,9 @@ foreach ($_SESSION['cart'] as $key){
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="https://localhost/vfl/index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="#">About</a></li>
+                        <li><a href="https://localhost/vfl/index.php">Home</a></li>
+                        <li><a href="https://localhost/vfl/products/">Products</a></li>
+                        <li><a href="https://localhost/vfl/aboutUs.php">About</a></li>
                         <li><a href="#">Contact</a></li>
                         <li><a href="https://localhost/vfl/profile/?id=<?php echo $_SESSION['user_id'] ?>&user=<?php echo $_SESSION['user_type'] ?>">Account</a></li>
                     </ul>
@@ -44,62 +42,48 @@ foreach ($_SESSION['cart'] as $key){
                  <th>Subtotal</th>
              </tr>
              <!-- the carts products -->
-<?php       foreach ($_SESSION['cart'] as $key){
+<?php       
+
+    $total=0;
+    if(isset($_SESSION['cart'])){
+    foreach ($_SESSION['cart'] as $key){
+
+            $a=explode("_", $key);
+            $data=$cart->get_product_details($a[1]);
+        while($row=mysqli_fetch_array($data)){
+
 	?>
              <tr>
                  <td>
                      <div class="cart-info">
                         <img src="https://localhost/vfl/images/red-shoes.png">
                         <div>
-                            <p>Red Running Shoes</p>
-                            <small>Price: Rs.800.00</small>
+                            <p><?php echo $row['product_name']; ?></p>
+                            <small>Price: Rs.<?php echo $row['product_price']; ?></small>
                             <br>
                             <a href="#">Remove</a>
                         </div>
                      </div>
                  </td>
-                 <td><input type="number" value="1"></td>
-                 <td>Rs.800.00</td>
+                 <td><input type="number" value="<?php echo $a[0] ?>"></td>
+                 <td>Rs.<?php echo $row['product_price']; ?></td>
              </tr>
-         <?php }//for loop ends here ?>
-             <!--cart stops here -->
+         <?php
 
-             <tr>
-                 <td>
-                     <div class="cart-info">
-                        <img src="https://localhost/vfl/images/red-shoes.png">
-                        <div>
-                            <p>Red Running Shoes</p>
-                            <small>Price: Rs.800.00</small>
-                            <br>
-                            <a href="#">Remove</a>
-                        </div>
-                     </div>
-                 </td>
-                 <td><input type="number" value="1"></td>
-                 <td>Rs.800.00</td>
-             </tr>
-             <tr>
-                <td>
-                    <div class="cart-info">
-                       <img src="https://localhost/vfl/images/red-shirt.png">
-                       <div>
-                           <p>Red Running ShoesRed Casual shirt for Men</p>
-                           <small>Price: Rs.650.00</small>
-                           <br>
-                           <a href="#">Remove</a>
-                       </div>
-                    </div>
-                </td>
-                <td><input type="number" value="1"></td>
-                <td>Rs.650.00</td>
-            </tr>
+        $total=$total+((integer)$row['product_price']*(integer)$a[0]);
+
+        }
+    
+        }//for loop ends here 
+    }
+    ?>
+             <!--cart stops here -->
          </table>
          <div class="total-price">
              <table>
                  <tr>
                      <td>Total</td>
-                     <td>Rs.1450.00</td>
+                     <td>Rs.<?php echo $total; ?></td>
                  </tr>
                  <tr>
                  	<td></td>

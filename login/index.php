@@ -57,9 +57,14 @@ include($_SERVER['DOCUMENT_ROOT'].'/vfl/login/login.php');
                                     <option value="shop">shop</option>
                                 </select>
                                 <button type="submit" name="submit" class="btn">Login</button>
+                                <button id="google" class="btn">login with google</button>
                                 <a href="#">Forgot Password</a>
                             </form>
-
+                            <script type="text/javascript">
+                                $("#google").click(function(){
+                                    location.href="https://localhost/vfl/login/google.php";
+                                });
+                            </script>
                             <form method="POST" id="RegForm">
                                 <input type="text" placeholder="Username" name="username">
                                 <input type="email" placeholder="Email" name="emails">
@@ -96,12 +101,13 @@ include($_SERVER['DOCUMENT_ROOT'].'/vfl/login/login.php');
         }
     }
     if(isset($_POST['register'])){
+       
         $email=$_POST['emails'];
         $password=$_POST['passwords'];
         $username=$_POST['username'];
         $signup=new Login();
         if($signup->user_signup($email,$password,$username)){
-            //echo "<script>alert('success');location.replace('https://localhost/vfl/login/');</script>";
+        echo "<script>alert('hi');</script>";     
         }
     }
 ?>
