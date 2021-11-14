@@ -2,6 +2,13 @@
 
 ## This website was built by me and my friends for our semester project. The aim is to promote local shops and industries to enable them to compete with the global companies.
 
+### The team members were:
+
+- Jash Dharia
+- Yohan Gupta
+- Anushree Dutt
+- Jaden Furtado
+
 ### home page
 ![Alt text](/images/home.png?raw=true "Shoppers Spot")
 
